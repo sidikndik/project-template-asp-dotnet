@@ -1,0 +1,32 @@
+# --- FOLDER WAJIB (HASIL BUILD) ---
+bin/
+obj/
+
+# --- LOGS & DIAGNOSTICS ---
+# Karena Anda punya folder 'logs', sebaiknya di-ignore isinya agar log lokal tidak masuk ke server
+logs/
+*.log
+
+# --- KONFIGURASI IDE & TOOLS ---
+.vs/
+.vscode/
+*.user
+*.suo
+# File testing API dari Visual Studio / VS Code
+.http
+
+# --- DATABASE & MIGRATIONS (OPSIONAL) ---
+# Jika Anda menggunakan SQLite untuk dev lokal
+*.db
+*.db-shm
+*.db-wal
+
+# --- SENSITIVE DATA ---
+# File ini biasanya berisi connection string database lokal
+appsettings.Development.json
+# Jika ada file secret lain
+secrets.json
+.env
+
+# --- PUBLISH OUTPUT ---
+publish/
