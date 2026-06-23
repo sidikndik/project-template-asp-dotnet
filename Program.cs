@@ -4,12 +4,13 @@ using MyApi.Repositories;
 using MyApi.Repositories.Interface;
 using MyApi.Services.Interface;
 using Serilog;
+using MyApi.Middleware;
 
 // setup logging
 Log.Logger = new LoggerConfiguration()
    .MinimumLevel.Information()
     // 🔥 filter ASP.NET internal
-    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    // .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
     .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
     // 🔥 optional: EF Core lebih tenang
     .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
@@ -52,8 +53,10 @@ if (app.Environment.IsDevelopment())
         return Task.CompletedTask;
     });
 }
+// setup middleware
+app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseSerilogRequestLogging(); // 🔥 auto log request
+// app.UseSerilogRequestLogging(); // 🔥 auto log request
 
 app.UseHttpsRedirection();
 

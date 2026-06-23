@@ -25,7 +25,8 @@ public class UserController : BaseController
     public async Task<IActionResult> GetById(Guid id)
     {
         var user = await _service.GetById(id);
-        if (user == null) return NotFoundResponse("User not found");
+        if (user == null)
+            throw new KeyNotFoundException("User not found");
 
         return Success(user, "Success get data user");
     }
