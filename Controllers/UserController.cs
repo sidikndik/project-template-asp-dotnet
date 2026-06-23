@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using MyApi.Controllers;
 using MyApi.DTOs;
 using MyApi.Services.Interface;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class UserController : BaseController
 {
     private readonly IUserService _service;
@@ -19,6 +21,13 @@ public class UserController : BaseController
     {
         var data = await _service.GetAll();
         return Success(data, "Sucess get data users");
+    }
+
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetPaged([FromQuery] QueryParameters parameters)
+    {
+        var data = await _service.GetPaged(parameters);
+        return Success(data, "Success get paged users");
     }
 
     [HttpGet("{id}")]

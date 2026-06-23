@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using MyApi.Models;
 using MyApi.Data;
+using MyApi.DTOs;
+using MyApi.Extensions;
 using MyApi.Repositories.Interface;
 
 namespace MyApi.Repositories;
@@ -17,6 +19,16 @@ public class UserRepository : IUserRepository
     public async Task<List<User>> GetAll()
     {
         return await _context.Users.ToListAsync();
+    }
+
+    public async Task<PagedResult<User>> GetPaged(QueryParameters parameters)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .ApplySearch(parameters.Search)
+            .ApplyFilters(parameters.Filters)
+            .ApplySorting(parameters.SortBy, parameters.SortDirection)
+            .ToPagedResultAsync(parameters);
     }
 
     public async Task<User?> GetById(Guid id)

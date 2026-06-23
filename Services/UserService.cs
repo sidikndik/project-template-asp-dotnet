@@ -20,6 +20,16 @@ public class UserService : IUserService
         return await _repo.GetAll();
     }
 
+    public async Task<PagedResult<User>> GetPaged(QueryParameters parameters)
+    {
+        _logger.LogInformation(
+            "Fetching users page {PageNumber} with page size {PageSize}",
+            parameters.PageNumber,
+            parameters.PageSize);
+
+        return await _repo.GetPaged(parameters);
+    }
+
     public async Task<User?> GetById(Guid id)
     {
         _logger.LogInformation("Fetching users by id");
